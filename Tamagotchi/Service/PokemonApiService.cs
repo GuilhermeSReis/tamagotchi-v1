@@ -17,7 +17,7 @@ namespace Tamagotchi.Service
 
         string pathApi = "https://pokeapi.co/api/v2/pokemon/";
 
-        public PokemonResModel GetPokemonDisponiveis()
+        public PokemonSpeciesResul GetPokemonDisponiveis()
         {
             try
             {
@@ -30,7 +30,7 @@ namespace Tamagotchi.Service
                 if(response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     //Dezerializando o json para objeto
-                    var pokemonResposta = JsonConvert.DeserializeObject<PokemonResModel>(response.Content);
+                    var pokemonResposta = JsonConvert.DeserializeObject<PokemonSpeciesResul>(response.Content);
                     return pokemonResposta;
                 }
                 Console.WriteLine($"Erro de status,não foi póssivel obter a lista. {response.Content} ");

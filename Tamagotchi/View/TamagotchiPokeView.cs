@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tamagotchi.Model;
 
 namespace Tamagotchi.View
 {
@@ -57,7 +58,7 @@ namespace Tamagotchi.View
             Console.Clear();
             TextoTamagotchi();
             Console.WriteLine("            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ MENU PRINCIPAL ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-            Console.WriteLine($"\n            O que deseja escolher,{nomePessoa} ?");
+            Console.WriteLine($"\n            O que deseja escolher, {nomePessoa.ToUpper()} ?");
             Console.Write(@"
             1 - Adotar um Pokemon
             2 - Interagir com seu Pokemon
@@ -66,6 +67,50 @@ namespace Tamagotchi.View
             
             ");
             Console.Write("Escolha uma opção:");
+        }
+
+        public void MenuPokemonEscolhido(PokemonsDetailResModel pokemon)
+        {
+            Console.Clear();
+            TextoTamagotchi();
+            Console.WriteLine("            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ MENU POKEMON ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+            Console.WriteLine($"\n            O que deseja escolher, {nomePessoa.ToUpper()} ?");
+            Console.WriteLine($"            1 - Adotar {pokemon.Name.ToUpper()}");
+            Console.Write(@"            2 - Informação sobre o Pokemon
+            3 - Voltar    
+            ");
+            Console.Write("Escolha uma opção: ");
+        }
+
+        public void MostrarPokemons(List<PokemonResModel> pokemons)
+        {
+            Console.Clear();
+            TextoTamagotchi();
+            Console.WriteLine("            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ POKEMONS ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n");
+
+            int columns = 2;
+            int rows = (int)Math.Ceiling((double)pokemons.Count / columns);
+
+            for(var row = 0; row < rows;row++)
+            {
+                for (var col  = 0; col < columns; col++)
+                {
+                    int index = row + col * rows;
+                    if (index < pokemons.Count)
+                    {
+                        Console.Write($"            Pokemon {index + 1}: {pokemons[index].Name,-20}");
+                    }
+                }
+                Console.WriteLine();
+            }
+
+            Console.Write($"\n            Escolha uma opção: ");
+            
+        }
+
+        public void MostrarDetalhePokemons()
+        {
+            
         }
     }
 }

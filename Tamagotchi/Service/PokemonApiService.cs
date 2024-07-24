@@ -15,14 +15,14 @@ namespace Tamagotchi.Service
             Path da Api: https://pokeapi.co/api/v2/pokemon/{nomePokemon}
         */
 
-        string pathApi = "https://pokeapi.co/api/v2/pokemon/";
+        string pathApi = "https://pokeapi.co/api/v2/pokemon";
 
         public PokemonSpeciesResul GetPokemonDisponiveis()
         {
             try
             {
                 //Criando e preparando o camingo para a request com RestSharp 
-                var client = new RestClient(pathApi);
+                var client = new RestClient(pathApi+"?limit=100000&offset=0");
                 //Fazendo o request
                 var request = new RestRequest("", Method.Get);
                 //Execultando a Request e recebendo uma Response
@@ -48,7 +48,36 @@ namespace Tamagotchi.Service
                 return null;
             }       
         }
-    
-        
-    }
+
+        public PokemonsDetailResModel GetPokemonEscolhido(string pokemonEscolhido)
+        {
+            try
+            {
+                var client = new RestClient(pathApi+"/"+pokemonEscolhido);
+                var request = new RestRequest("", Method.Get);
+                var response = client.Execute(request);
+
+                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    //Dezerializando o json para objeto
+                    var pokemonResposta = JsonConvert.DeserializeObject<PokemonsDetailResModel>(response.Content);
+                    return pokemonResposta;
+                }
+                Console.WriteLine($"Erro de status,não foi póssivel obter o pokemon. {response.Content} ");
+                return null;
+
+            }
+            catch(HttpRequestException ex)
+            {
+                Console.WriteLine($"Erro no request. {ex.Message}");
+                return null;
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro não previsto. {ex.Message}");
+                return null;
+            }       
+        }
+    }     
 }

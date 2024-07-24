@@ -22,7 +22,7 @@ namespace Tamagotchi.Service
             try
             {
                 //Criando e preparando o camingo para a request com RestSharp 
-                var client = new RestClient(pathApi+"?limit=100000&offset=0");
+                var client = new RestClient(pathApi+"?limit=1025&offset=0");
                 //Fazendo o request
                 var request = new RestRequest("", Method.Get);
                 //Execultando a Request e recebendo uma Response

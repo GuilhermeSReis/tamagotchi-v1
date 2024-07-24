@@ -14,9 +14,6 @@ namespace Tamagotchi.Controller
         private TamagotchiPokeView tamagotchiView {get;set;}
         private PokemonApiService pokemonApiService { get; set; }
         private List<PokemonResModel> pokemonsCadastrados{get;set;}
-
-        
-
         //Contrutor da Controller
         public TamagotchiController()
         {
@@ -40,15 +37,13 @@ namespace Tamagotchi.Controller
                     case "1":
                         tamagotchiView.MostrarPokemons(pokemonsCadastrados);
                         string pokemonEscolhido = Console.ReadLine();
-                        if (pokemonsCadastrados.Any(x => x.Name == pokemonEscolhido))
+                        if (pokemonsCadastrados.Any(x => x.Name == pokemonEscolhido) || int.Parse(pokemonEscolhido) <= pokemonsCadastrados.Count)
                         {
                             var detalhePokemons = pokemonApiService.GetPokemonEscolhido(pokemonEscolhido);
                             do
                             {
-                                
                                 tamagotchiView.MenuPokemonEscolhido(detalhePokemons);
                                 opcao = Console.ReadLine();
-                                
                                 switch (opcao)
                                 {
                                     case "1":
@@ -56,6 +51,7 @@ namespace Tamagotchi.Controller
                                     break;
                                     case "2":
                                     //TODO: fazer parte das informações
+                                    tamagotchiView.MostrarDetalhePokemons(detalhePokemons);
                                     break;
                                     case "3":
                                         Console.Write($"            Voltando");
@@ -71,7 +67,8 @@ namespace Tamagotchi.Controller
                                     break;
                                 }
                             } while (opcao != "3");
-                        }else
+                        }
+                        else
                         {
                             Console.WriteLine($"            Esse pokemon não existe ou não está cadastrado!!");
                             Thread.Sleep(1000);
@@ -99,9 +96,6 @@ namespace Tamagotchi.Controller
                     break;
                 }                
             } while (opcao != "4");
-        
         }
-        
-
     }
 }

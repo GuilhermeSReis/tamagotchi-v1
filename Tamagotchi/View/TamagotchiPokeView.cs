@@ -98,7 +98,7 @@ namespace Tamagotchi.View
                     int index = row + col * rows;
                     if (index < pokemons.Count)
                     {
-                        Console.Write($"            Pokemon {index + 1}: {pokemons[index].Name,-20}");
+                        Console.Write($"            Pokemon {index + 1}: {pokemons[index].Name.ToUpper(),-20}");
                     }
                 }
                 Console.WriteLine();
@@ -108,9 +108,21 @@ namespace Tamagotchi.View
             
         }
 
-        public void MostrarDetalhePokemons()
+        public void MostrarDetalhePokemons(PokemonsDetailResModel pokemon)
         {
+            Console.Clear();
+            TextoTamagotchi();
+            Console.WriteLine($"            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ {pokemon.Name.ToUpper()} ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n\n");
+            Console.WriteLine($"                                    Base XP: {pokemon.BaseExperience}");
+            Console.WriteLine($"                                    Altura: {pokemon.Height}            Peso: {pokemon.Weight}");
+            Console.Write($"                                    Habilidades: ");
             
+            for (var i = 0; i < pokemon.Abilities.Count; i++)
+            {
+                Console.Write($"{pokemon.Abilities[i].Ability.Name}     ");
+                
+            }
+            Console.ReadLine();
         }
     }
 }

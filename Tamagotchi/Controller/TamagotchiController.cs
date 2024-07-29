@@ -36,8 +36,12 @@ namespace Tamagotchi.Controller
                 {
                     case "1":
                         tamagotchiView.MostrarPokemons(pokemonsCadastrados);
-                        string pokemonEscolhido = Console.ReadLine();
-                        if (pokemonsCadastrados.Any(x => x.Name == pokemonEscolhido) || int.Parse(pokemonEscolhido) <= pokemonsCadastrados.Count)
+                        string pokemonEscolhido = Console.ReadLine().ToLower();
+
+                        bool pokemonExisteporNome = pokemonsCadastrados.Any(x => x.Name == pokemonEscolhido);
+                        bool pokemonExistePorIndice = int.TryParse(pokemonEscolhido, out var index) && index > 0 && index <= pokemonsCadastrados.Count;
+
+                        if (pokemonExisteporNome || pokemonExistePorIndice)
                         {
                             var detalhePokemons = pokemonApiService.GetPokemonEscolhido(pokemonEscolhido);
                             do
@@ -50,28 +54,20 @@ namespace Tamagotchi.Controller
                                     //TODO: fazer parte de adoção
                                     break;
                                     case "2":
-                                    //TODO: fazer parte das informações
-                                    tamagotchiView.MostrarDetalhePokemons(detalhePokemons);
+                                        tamagotchiView.MostrarDetalhePokemons(detalhePokemons);
                                     break;
                                     case "3":
-                                        Console.Write($"            Voltando");
-                                        foreach (var c in "......")
-                                        {
-                                            Console.Write(c);
-                                            Thread.Sleep(250);
-                                        }
+                                        tamagotchiView.MensagemDeVoltandoOuSaindo("Voltando");
                                     break;
                                     default:
-                                        Console.WriteLine($"            Opção ínvalida!!!");
-                                        Thread.Sleep(2000);
+                                        tamagotchiView.MensagemOpcaoInvalida();
                                     break;
                                 }
                             } while (opcao != "3");
                         }
                         else
                         {
-                            Console.WriteLine($"            Esse pokemon não existe ou não está cadastrado!!");
-                            Thread.Sleep(1000);
+                            tamagotchiView.MensagemDeErro();
                         }
                         opcao = "";
                     break;
@@ -82,17 +78,10 @@ namespace Tamagotchi.Controller
                         //TODO: fazer parte Ver Mascotes Adotados
                     break;
                     case "4":
-                        Console.Write($"            Saindo");
-                        foreach (var c in "......")
-                        {
-                            Console.Write(c);
-                            Thread.Sleep(500);
-                        }
-                    
+                        tamagotchiView.MensagemDeVoltandoOuSaindo("Saindo");
                     break;
                     default:
-                        Console.WriteLine($"            Opção ínvalida!!!");
-                        Thread.Sleep(2000);
+                        tamagotchiView.MensagemOpcaoInvalida();
                     break;
                 }                
             } while (opcao != "4");

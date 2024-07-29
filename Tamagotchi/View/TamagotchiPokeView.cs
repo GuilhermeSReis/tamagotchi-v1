@@ -124,5 +124,26 @@ namespace Tamagotchi.View
             }
             Console.ReadLine();
         }
+
+        public void MensagemDeErro(){
+            Console.WriteLine("            Esse pokemon não existe ou não está cadastrado!!");
+            Thread.Sleep(1000);
+        }
+
+        public void MensagemDeVoltandoOuSaindo(string msg)
+        {
+            Console.Write($"            {msg}");
+            foreach (var c in "......")
+            {
+                Console.Write(c);
+                Thread.Sleep(500);
+            }
+        }
+
+        public void MensagemOpcaoInvalida()
+        {
+            Console.WriteLine($"            Opção ínvalida!!!");
+            Thread.Sleep(2000);
+        }
     }
 }

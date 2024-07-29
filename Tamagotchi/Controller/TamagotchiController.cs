@@ -51,7 +51,9 @@ namespace Tamagotchi.Controller
                                 switch (opcao)
                                 {
                                     case "1":
-                                    //TODO: fazer parte de adoção
+                                    //TODO: fazer parte de adoção  
+                                        tamagotchiView.MensagemAdocao(detalhePokemons);
+                                        opcao = "3";
                                     break;
                                     case "2":
                                         tamagotchiView.MostrarDetalhePokemons(detalhePokemons);

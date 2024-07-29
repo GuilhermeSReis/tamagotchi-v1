@@ -145,5 +145,22 @@ namespace Tamagotchi.View
             Console.WriteLine($"            Opção ínvalida!!!");
             Thread.Sleep(2000);
         }
+
+        public void MensagemAdocao(PokemonsDetailResModel pokemon)
+        {
+            Console.Clear();
+            TextoTamagotchi();
+            Console.WriteLine($"            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ {pokemon.Name.ToUpper()} ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n\n");
+            Console.WriteLine("                                     Parabéns! Você adotou um " + pokemon.Name + "!\n");
+            Console.WriteLine("                                                ──────────────");
+            Console.WriteLine("                                                ────▄████▄────");
+            Console.WriteLine("                                                ──▄████████▄──");
+            Console.WriteLine("                                                ──██████████──");
+            Console.WriteLine("                                                ──▀████████▀──");
+            Console.WriteLine("                                                ─────▀██▀─────");
+            Console.WriteLine("                                                ──────────────");
+
+            Thread.Sleep(5000);
+        }
     }
 }

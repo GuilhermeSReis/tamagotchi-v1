@@ -162,5 +162,7 @@ namespace Tamagotchi.View
 
             Thread.Sleep(5000);
         }
+
+        
     }
 }

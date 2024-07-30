@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Tamagotchi.Model;
 using Tamagotchi.Service;
 using Tamagotchi.View;
@@ -14,12 +15,24 @@ namespace Tamagotchi.Controller
         private TamagotchiPokeView tamagotchiView {get;set;}
         private PokemonApiService pokemonApiService { get; set; }
         private List<PokemonResModel> pokemonsCadastrados{get;set;}
+        private List<TamagotchiDtoModel> pokemonsAdotados { get; set; }
+        
+        IMapper mapper{get;set;}
+
         //Contrutor da Controller
         public TamagotchiController()
         {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AutoMapperProfileService>(); 
+            });
+
+            mapper = config.CreateMapper();
+
             tamagotchiView = new TamagotchiPokeView();
             pokemonApiService = new PokemonApiService();
             pokemonsCadastrados = pokemonApiService.GetPokemonDisponiveis().Results;
+            pokemonsAdotados = new List<TamagotchiDtoModel>();
         }
 
         //Método Start Tamagotchi
@@ -51,9 +64,19 @@ namespace Tamagotchi.Controller
                                 switch (opcao)
                                 {
                                     case "1":
-                                    //TODO: fazer parte de adoção  
-                                        tamagotchiView.MensagemAdocao(detalhePokemons);
-                                        opcao = "3";
+                                    //TODO: fazer parte de adoção
+                                        if (pokemonsAdotados.Any(x => x.Nome == detalhePokemons.Name))
+                                        {
+                                            Console.WriteLine($"            Você já possui esse pokemon!!");
+                                            tamagotchiView.MensagemDeVoltandoOuSaindo("Voltando");
+                                            opcao = "3";
+                                        }else
+                                        {
+                                            TamagotchiDtoModel tamagotchi = mapper.Map<TamagotchiDtoModel>(detalhePokemons);
+                                            pokemonsAdotados.Add(tamagotchi);
+                                            tamagotchiView.MensagemAdocao(detalhePokemons);
+                                            opcao = "3";    
+                                        }
                                     break;
                                     case "2":
                                         tamagotchiView.MostrarDetalhePokemons(detalhePokemons);
@@ -78,6 +101,7 @@ namespace Tamagotchi.Controller
                     break;
                     case "3": 
                         //TODO: fazer parte Ver Mascotes Adotados
+                        
                     break;
                     case "4":
                         tamagotchiView.MensagemDeVoltandoOuSaindo("Saindo");

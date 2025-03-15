@@ -43,13 +43,13 @@ namespace Tamagotchi.Controller
             do
             {
                 tamagotchiView.MenuInicial();
-                opcao = Console.ReadLine();
+                opcao = Console.ReadLine().Replace(" ", "");
 
                 switch (opcao)
                 {
                     case "1":
                         tamagotchiView.MostrarPokemons(pokemonsCadastrados);
-                        string pokemonEscolhido = Console.ReadLine().ToLower();
+                        string pokemonEscolhido = Console.ReadLine().ToLower().Replace(" ", "");
 
                         bool pokemonExisteporNome = pokemonsCadastrados.Any(x => x.Name == pokemonEscolhido);
                         bool pokemonExistePorIndice = int.TryParse(pokemonEscolhido, out var index) && index > 0 && index <= pokemonsCadastrados.Count;
@@ -60,7 +60,7 @@ namespace Tamagotchi.Controller
                             do
                             {
                                 tamagotchiView.MenuPokemonEscolhido(detalhePokemons);
-                                opcao = Console.ReadLine();
+                                opcao = Console.ReadLine().Replace(" ", "");
                                 switch (opcao)
                                 {
                                     case "1":

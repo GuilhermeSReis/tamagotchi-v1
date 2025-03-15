@@ -47,10 +47,12 @@ namespace Tamagotchi.Controller
 
                 switch (opcao)
                 {
+
                     case "1":
                         tamagotchiView.MostrarPokemons(pokemonsCadastrados);
-                        string pokemonEscolhido = Console.ReadLine().ToLower().Replace(" ", "");
 
+                        string pokemonEscolhido = Console.ReadLine().ToLower().Replace(" ", "");
+                        
                         bool pokemonExisteporNome = pokemonsCadastrados.Any(x => x.Name == pokemonEscolhido);
                         bool pokemonExistePorIndice = int.TryParse(pokemonEscolhido, out var index) && index > 0 && index <= pokemonsCadastrados.Count;
 

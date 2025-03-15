@@ -39,12 +39,12 @@ namespace Tamagotchi.View
             foreach (var m in msg1)
             {
                 Console.Write(m);
-                Thread.Sleep(100);
+                Thread.Sleep(30);
             }
             foreach (var m in msg2)
             {
                 Console.Write(m);
-                Thread.Sleep(100);
+                Thread.Sleep(30);
             }
             
             Console.Write($"\n\n            Qual seu nome jogador ? ");
@@ -84,28 +84,58 @@ namespace Tamagotchi.View
 
         public void MostrarPokemons(List<PokemonResModel> pokemons)
         {
-            Console.Clear();
-            TextoTamagotchi();
-            Console.WriteLine("            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ POKEMONS ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n");
-
-            int columns = 2;
-            int rows = (int)Math.Ceiling((double)pokemons.Count / columns);
-
-            for(var row = 0; row < rows;row++)
-            {
-                for (var col  = 0; col < columns; col++)
-                {
-                    int index = row + col * rows;
-                    if (index < pokemons.Count)
-                    {
-                        Console.Write($"            Pokemon {index + 1}: {pokemons[index].Name.ToUpper(),-20}");
-                    }
-                }
-                Console.WriteLine();
-            }
-
-            Console.Write($"\n            Escolha uma opção: ");
             
+
+            int pageSize = 20; // Número total de Pokémon por página
+            int columns = 2; // Número de colunas
+            int rowsPerPage = pageSize / columns;
+
+            int totalPokemons = pokemons.Count;
+            int totalPages = (int)Math.Ceiling((double)totalPokemons / pageSize);
+
+            int currentPage = 0;
+
+            while (true)
+            {
+                Console.Clear();
+                TextoTamagotchi();
+                Console.WriteLine("            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ POKEMONS ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n");
+                Console.WriteLine($"            Página {currentPage + 1}/{totalPages}\n");
+
+                // Exibir Pokémon em duas colunas
+                for (int row = 0; row < rowsPerPage; row++)
+                {
+                    for (int col = 0; col < columns; col++)
+                    {
+                        int index = (currentPage * pageSize) + (row + col * rowsPerPage);
+                        if (index < totalPokemons)
+                        {
+                            Console.Write($"            Pokemon {index + 1}: {pokemons[index].Name.ToUpper(),-20}");
+                        }
+                    }
+                    Console.WriteLine();
+                }
+
+                // Navegação
+                Console.WriteLine("\n            Opções: (n) Próxima Página, (p) Página Anterior, (e)escolher opção");
+                var input = Console.ReadKey(true).Key;
+
+                if (input == ConsoleKey.N && currentPage < totalPages - 1)
+                {
+                    currentPage++;
+                }
+                else if (input == ConsoleKey.P && currentPage > 0)
+                {
+                    currentPage--;
+                }
+               
+                else if (input == ConsoleKey.E)
+                {
+                    Console.Write($"\n            Escolha um pokemon: ");
+                    break;
+                }
+            }
+           
         }
 
         public void MostrarDetalhePokemons(PokemonsDetailResModel pokemon)
@@ -113,9 +143,10 @@ namespace Tamagotchi.View
             Console.Clear();
             TextoTamagotchi();
             Console.WriteLine($"            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ {pokemon.Name.ToUpper()} ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n\n");
-            Console.WriteLine($"                                    Base XP: {pokemon.BaseExperience}");
-            Console.WriteLine($"                                    Altura: {pokemon.Height}            Peso: {pokemon.Weight}");
-            Console.Write($"                                    Habilidades: ");
+            Console.WriteLine($"            Base XP: {pokemon.BaseExperience}");
+            Console.WriteLine($"            Altura: {pokemon.Height}");
+            Console.WriteLine($"            Peso: {pokemon.Weight}");
+            Console.Write($"            Habilidades: ");
             
             for (var i = 0; i < pokemon.Abilities.Count; i++)
             {

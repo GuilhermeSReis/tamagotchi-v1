@@ -225,6 +225,20 @@ namespace Tamagotchi.View
                     }
                     Console.WriteLine(); // Finaliza a linha
                 }
+                Console.WriteLine("\n            0 - Sair;\n");
+        }
+
+        public void MensagemMeuPokemon(TamagotchiDtoModel pokemon) 
+        {
+            Console.Clear();
+            TextoTamagotchi();
+            Console.WriteLine($"            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ {pokemon.Nome.ToUpper()} ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+            Console.WriteLine($"\n            O que deseja escolher, {nomePessoa.ToUpper()} ?");
+            Console.WriteLine($"            1 - Informação sobre o Pokemon");
+            Console.WriteLine($"            2 - Abandonar o {pokemon.Nome.ToUpper()}");
+            Console.WriteLine($"            3 - Voltar");
+            Console.Write("\n            Escolha uma opção: ");
+            Console.ReadLine();
         }
 
 

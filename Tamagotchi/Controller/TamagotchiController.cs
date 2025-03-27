@@ -118,11 +118,33 @@ namespace Tamagotchi.Controller
                     case "3":
                         if (pokemonsAdotados.Count > 0)
                         {
-                        tamagotchiView.MensagemMascotesAdotados(pokemonsAdotados);
-                        Console.Write("            Escolha seu pokemon: ");
-                        pokemonEscolhido = Console.ReadLine();
+                            tamagotchiView.MensagemMascotesAdotados(pokemonsAdotados);
+                            Console.Write("            Escolha seu pokemon: ");
+                            pokemonEscolhido = Console.ReadLine().Replace(" ","");
+                            if (pokemonEscolhido == "0"){ break; }
 
-                          //TODO: fazer a parte de mostrar detalhe do pokemon
+                            //TODO: fazer a parte de mostrar detalhe do pokemon
+                            pokemonExistePorIndice = int.TryParse(pokemonEscolhido, out var index2) && index2 > 0 && index2 <= pokemonsAdotados.Count;
+                            pokemonExisteporNome = pokemonsAdotados.Any(x => x.Nome == pokemonEscolhido);
+
+                            if (pokemonExistePorIndice || pokemonExisteporNome)
+                            {
+                                if (pokemonExistePorIndice)
+                                {
+                                    var pokemonSelecionado = pokemonsAdotados[index2 - 1];
+                                    tamagotchiView.MensagemMeuPokemon(pokemonSelecionado);
+                                }
+                                else if (pokemonExisteporNome)
+                                {
+                                    var pokemonSelecionado = pokemonsAdotados.First(x => x.Nome.Equals(pokemonEscolhido));
+                                    tamagotchiView.MensagemMeuPokemon(pokemonSelecionado);
+                                }
+                            }
+                            else
+                            {
+                                tamagotchiView.MensagemOpcaoInvalida();
+                                opcao = "3";
+                            }
 
                         }
                         else

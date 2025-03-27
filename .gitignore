@@ -483,4 +483,5 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 
-oque tennho que fazer.txt
+#Indice do que tenho que fazer
+*indice.txt

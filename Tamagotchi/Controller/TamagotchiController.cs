@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,15 +70,28 @@ namespace Tamagotchi.Controller
                                     //TODO: fazer parte de adoção
                                         if (pokemonsAdotados.Any(x => x.Nome == detalhePokemons.Name))
                                         {
+                                            Console.WriteLine();
                                             Console.WriteLine($"            Você já possui esse pokemon!!");
                                             tamagotchiView.MensagemDeVoltandoOuSaindo("Voltando");
                                             opcao = "3";
                                         }else
                                         {
-                                            TamagotchiDtoModel tamagotchi = mapper.Map<TamagotchiDtoModel>(detalhePokemons);
-                                            pokemonsAdotados.Add(tamagotchi);
-                                            tamagotchiView.MensagemAdocao(detalhePokemons);
-                                            opcao = "3";    
+                                            if (pokemonsAdotados.Count < 6)
+                                            {
+                                                TamagotchiDtoModel tamagotchi = mapper.Map<TamagotchiDtoModel>(detalhePokemons);
+                                                pokemonsAdotados.Add(tamagotchi);
+                                                tamagotchiView.MensagemAdocao(detalhePokemons);
+                                                opcao = "3";
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine();
+                                                Console.WriteLine($"            Você já possui o limite de 6 pokemons!!");
+                                                tamagotchiView.MensagemDeVoltandoOuSaindo("Voltando");
+                                                opcao = "3";
+                                            }
+
+
                                         }
                                     break;
                                     case "2":
@@ -101,10 +115,25 @@ namespace Tamagotchi.Controller
                     case "2": 
                         //TODO: fazer parte Interagir com seu Pokemon
                     break;
-                    case "3": 
-                        //TODO: fazer parte Ver Mascotes Adotados
-                        
-                    break;
+                    case "3":
+                        if (pokemonsAdotados.Count > 0)
+                        {
+                        tamagotchiView.MensagemMascotesAdotados(pokemonsAdotados);
+                        Console.Write("            Escolha seu pokemon: ");
+                        pokemonEscolhido = Console.ReadLine();
+
+                          //TODO: fazer a parte de mostrar detalhe do pokemon
+
+                        }
+                        else
+                        {
+                            tamagotchiView.MensagemVerMascote();
+                            Console.WriteLine();
+                            Console.WriteLine($"            Você ainda não possui nenhum pokemon!!");
+                            tamagotchiView.MensagemDeVoltandoOuSaindo("Voltando");
+
+                        }
+                        break;
                     case "4":
                         tamagotchiView.MensagemDeVoltandoOuSaindo("Saindo");
                     break;

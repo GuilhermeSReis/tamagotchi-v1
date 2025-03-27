@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Tamagotchi.Model;
 
@@ -191,9 +192,49 @@ namespace Tamagotchi.View
             Console.WriteLine("                                                ─────▀██▀─────");
             Console.WriteLine("                                                ──────────────");
 
-            Thread.Sleep(5000);
+            Thread.Sleep(3000);
         }
 
-        
+        public void MensagemVerMascote() 
+        {
+            Console.Clear();
+            TextoTamagotchi();
+            Console.WriteLine("            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ MEUS POKEMONS ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+
+
+        }
+
+        public void MensagemMascotesAdotados(List<TamagotchiDtoModel> pokemonsAdotados) 
+        {
+           
+                MensagemVerMascote();
+                Console.WriteLine();
+                int columns = 3;
+                int totalPokemons = pokemonsAdotados.Count();
+                int rows = (int)Math.Ceiling((double) totalPokemons / columns);
+                
+                for (int row = 0; row < rows; row++ )
+                {
+                    for (int col = 0; col < columns; col++) 
+                    {
+                        int index = row * columns + col;
+                        if (index < totalPokemons)
+                        {
+                            Console.Write($"            Pokemon {index + 1}: {pokemonsAdotados[index].Nome.ToUpper()}");
+                        }
+                    }
+                    Console.WriteLine(); // Finaliza a linha
+                }
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }
